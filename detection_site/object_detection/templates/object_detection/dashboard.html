@@ -1,0 +1,51 @@
+{% extends 'object_detection/base.html' %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+<h2>Your Images</h2>
+<a href="{% url 'add_image_feed' %}" class="btn btn-success">Upload New Image</a>
+<ul>
+    {% for image in images %}
+        <li><img src="{{ image.image.url }}" width="100px" /> - {{ image.result }} ({{ image.confidence }}%)</li>
+    {% empty %}
+        <li>No images uploaded.</li>
+    {% endfor %}
+</ul>
+{% endblock %}
+
+
+
+<canvas id="detectionChart"></canvas>
+<script>
+    var ctx = document.getElementById('detectionChart').getContext('2d');
+    var detectionChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: {{ labels|safe }},
+            datasets: [{
+                label: 'Вероятность распознанных объектов',
+                data: {{ data|safe }},
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script>
+
+
+{% for image in images %}
+    <div>
+        <img src="{{ image.image.url }}" alt="Image" width="200">
+        <form action="{% url 'delete_image' image.id %}" method="post">
+            {% csrf_token %}
+            <button type="submit">Удалить</button>
+        </form>
+    </div>
+{% endfor %}

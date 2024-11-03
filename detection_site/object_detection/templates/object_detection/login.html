@@ -1,0 +1,19 @@
+{% extends 'object_detection/base.html' %}
+{% block title %}Login{% endblock %}
+{% block content %}
+<h2>Login</h2>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">Login</button>
+</form>
+{% endblock %}
+
+
+{% if messages %}
+    <ul class="list-unstyled">
+        {% for message in messages %}
+            <li class="alert alert-info">{{ message }}</li>
+        {% endfor %}
+    </ul>
+{% endif %}

@@ -1,0 +1,32 @@
+{% extends 'object_detection/base.html' %}
+
+{% block title %}Добавить новое изображение{% endblock %}
+
+{% block content %}
+<h2>Добавить новое изображение</h2>
+<form method="POST" enctype="multipart/form-data" class="form-group">
+    {% csrf_token %}
+
+    <label for="image">Изображение:</label>
+    <input type="file" name="image" class="form-control" required>
+
+    <button type="submit" class="btn btn-primary mt-3">Загрузить</button>
+</form>
+
+{% if form.errors %}
+    <div class="alert alert-danger mt-3">
+        <strong>Ошибка!</strong> Пожалуйста, исправьте следующие ошибки:
+        <ul>
+            {% for field in form %}
+                {% for error in field.errors %}
+                    <li>{{ error }}</li>
+                {% endfor %}
+            {% endfor %}
+            {% for error in form.non_field_errors %}
+                <li>{{ error }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endif %}
+
+{% endblock %}

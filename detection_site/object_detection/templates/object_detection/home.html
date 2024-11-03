@@ -1,0 +1,12 @@
+{% extends 'object_detection/base.html' %}
+
+{% block title %}Главная страница{% endblock %}
+
+{% block content %}
+<div class="container mt-4 text-center">
+        <a class="btn btn-primary btn-lg" href="{% url 'register' %}">Регистрация</a>
+        <a class="btn btn-success btn-lg" href="{% url 'login' %}">Вход</a>
+    </p>
+</div>
+{% endblock %}
+
